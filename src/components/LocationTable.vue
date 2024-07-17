@@ -25,7 +25,7 @@
           <td>{{ item.calories }}</td>
           <td>{{ item.duration }}</td>
           <td>
-            <v-btn variant="text" >
+            <v-btn to="locationdetail" variant="text" >
             <v-icon>mdi-monitor-eye</v-icon>
             </v-btn>
         </td>
@@ -40,22 +40,22 @@
         desserts: [
           {
             name: 'Frozen Yogurt',
-            calories: 159,
+            calories: 'Grid',
             duration: '29h:45min'
           },
           {
             name: 'Ice cream sandwich',
-            calories: 237,
+            calories: 'Grid',
             duration: '29h:45min',
           },
           {
             name: 'Eclair',
-            calories: 262,
+            calories: 'Gen',
             duration: '29h:45min',
           },
           {
             name: 'Cupcake',
-            calories: 305,
+            calories: 'Gen',
             duration: '29h:45min',
           },
           {

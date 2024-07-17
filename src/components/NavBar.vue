@@ -12,7 +12,7 @@
         <template v-if="$vuetify.display.mdAndUp">
           <v-btn icon="mdi-magnify" variant="text"></v-btn>
 
-          <v-btn icon="mdi-filter" variant="text"></v-btn>
+          
         </template>
 
         <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
@@ -22,10 +22,20 @@
         v-model="drawer"
         :location="$vuetify.display.mobile ? 'bottom' : undefined"
         temporary
+        
       >
-        <v-list
-          :items="items"
-        ></v-list>
+      <v-list>
+      <v-list-item
+        v-for="(item, index) in items"
+        :key="index"
+        :to="item.to"
+        link
+      >
+        <v-list-item-content>
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
         <template v-slot:append>
           <div class="pa-2">
             <v-btn block>
@@ -43,19 +53,19 @@
       items: [
         {
           title: 'Dashboard',
-          value: 'foo',
+          to: '/dashboard',
         },
         {
           title: 'Reports',
-          value: 'bar',
+          to: '#',
         },
         {
           title: 'Profile',
-          value: 'fizz',
+          to: '#',
         },
         {
           title: 'Logout',
-          value: 'buzz',
+          to: '/',
         },
       ],
     }),
