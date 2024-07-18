@@ -39,38 +39,38 @@
       return {
         desserts: [
           {
-            name: 'Frozen Yogurt',
+            name: 'Mobolaji Bank Anthony',
             calories: 'Grid',
             duration: '29h:45min'
           },
           {
-            name: 'Ice cream sandwich',
+            name: 'Shangisha Branch',
             calories: 'Grid',
             duration: '29h:45min',
           },
           {
-            name: 'Eclair',
+            name: 'Allen Avenue',
             calories: 'Gen',
             duration: '29h:45min',
           },
           {
-            name: 'Cupcake',
+            name: 'Saka Tinubu',
             calories: 'Gen',
             duration: '29h:45min',
           },
           {
-            name: 'Gingerbread',
-            calories: 356,
+            name: 'Ketu-Ogudu II',
+            calories: "Grid",
             duration: '29h:45min',
           },
           {
-            name: 'Jelly bean',
-            calories: 375,
+            name: 'Dopemu/Akowonjo',
+            calories: 'Gen 2',
             duration: '0h:5min',
           },
           {
-            name: 'Lollipop',
-            calories: 392,
+            name: 'Mafoluku Data Center',
+            calories: 'Solar',
             duration: '2h:5min',
           },
           {

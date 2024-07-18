@@ -7,13 +7,13 @@
             
           </div>
           <div>
-            <h3>2</h3>
+            <h3>Energy Management Ad</h3>
           </div>
           <div>
-            <h3>3</h3>
+            <h3>Earthing Protection Ad</h3>
           </div>
           <div>
-            <h3>4</h3>
+            <h3>Energy Audit Ad</h3>
           </div>
         </a-carousel>
       </v-col>
@@ -42,7 +42,7 @@
                   class="mt-4" 
                   color="success" 
                   block 
-                  @click="dialog = true">
+                  to="dashboard">
                     Login
                   </v-btn>
 

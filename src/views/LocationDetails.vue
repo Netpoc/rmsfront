@@ -76,7 +76,10 @@
                     </v-card-title>
                     <v-card-text>
                         Select Date Range
-                        <a-range-picker v-model:value="value1" />
+                        <a-range-picker class="mt-1" v-model:value="value1" />
+                        <div class="d-flex justify-end">
+                            <v-btn outline color="#92D050" class="mt-3" size="small">Generate</v-btn>
+                        </div>
                         <div class="mt-4 d-flex justify-space-between align-center">
                             View Last Month's Report
                             <v-btn size="small" variant="text" class="rounded-xl">here</v-btn>
