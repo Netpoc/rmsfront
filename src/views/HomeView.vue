@@ -2,9 +2,9 @@
   <v-container fluid>
     <v-row>
       <v-col md="8">
-        <a-carousel class=".d-none .d-sm-flex.d-none .d-md-flex .d-lg-none" autoplay>
-          <div class="d-flex">
-            
+        <a-carousel class="d-none d-md-block" autoplay>
+          <div>
+            Money!
           </div>
           <div>
             <h3>Energy Management Ad</h3>
@@ -17,7 +17,7 @@
           </div>
         </a-carousel>
       </v-col>
-      <v-col md="4">
+      <v-col md="4" cols="12">
         <v-sheet color="#92D050" class="pa-5 rounded-xl fill-height">
           <v-card color="#0E0856" class="pa-2 rounded-xl">
             <v-card-title>

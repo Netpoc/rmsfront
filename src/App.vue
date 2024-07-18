@@ -6,7 +6,7 @@
       <v-fab class="pa-5 mb-4" location="bottom end" icon="mdi-whatsapp" size="54" app appear></v-fab>
       <v-footer class="d-flex flex-column">
     <v-card color="#92D050" class="d-flex w-100 align-center px-4">
-      <strong>Actionable insight for effective descision making!</strong>
+      <strong class="d-none d-md-block">Actionable insight for effective descision making!</strong>
 
       <v-spacer></v-spacer>
 

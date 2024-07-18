@@ -2,8 +2,8 @@
 <template>
     <v-container fluid>
         <v-row>
-            <v-col class=".d-none" md="7">
-                <a-carousel class="fill-height" autoplay>
+            <v-col md="7">
+                <a-carousel class="fill-height d-none d-md-block" autoplay>
                     <v-sheet>
                         <MainMap />
                     </v-sheet>
@@ -18,14 +18,14 @@
                     <v-card color="#0E0856" class="rounded-lg">
                         <v-card-text class="d-flex align-center justify-space-between">
                             <v-sheet color="#0E0856" class="d-flex align-center">
-                                <small>Device Error</small>
+                                <small class="d-none d-md-block">Device Error</small>
                                 <v-btn class="ml-2" variant="text" size="small">
                                     <v-icon size="20">mdi-chip</v-icon>
                                 </v-btn>
                             </v-sheet>
                             <v-divider vertical />
                             <v-sheet color="#0E0856" class="d-flex align-center">
-                                <small>Drain</small>
+                                <small class="d-none d-md-block">Drain</small>
                                 <v-dialog v-model="dialog" max-width="400" persistent>
                                     <template v-slot:activator="{ props: activatorProps }">
                                         <v-badge color="warning" content="4+">                                     
@@ -53,7 +53,7 @@
                             </v-sheet>
                             <v-divider vertical />
                             <v-sheet color="#0E0856" class="d-flex align-center">
-                                <small>Low Fuel</small>
+                                <small class="d-none d-md-block">Low Fuel</small>
                                 <v-dialog v-model="dialog" max-width="400" persistent>
                                     <template v-slot:activator="{ props: activatorProps }">                                        
                                             <v-btn v-bind="activatorProps" class="ml-2" variant="text"
@@ -79,7 +79,7 @@
                             </v-sheet>
                             <v-divider vertical />
                             <v-sheet color="#0E0856" class="d-flex align-center">
-                                <small>Refill</small>
+                                <small class="d-none d-md-block">Refill</small>
                                 <v-dialog v-model="dialog" max-width="400" persistent>
                                     <template v-slot:activator="{ props: activatorProps }">
                                         <v-badge color="success" content="8+">
