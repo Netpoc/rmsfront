@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col md="8">
-        <a-carousel autoplay>
+        <a-carousel class=".d-none .d-sm-flex.d-none .d-md-flex .d-lg-none" autoplay>
           <div class="d-flex">
             
           </div>
@@ -110,11 +110,7 @@ export default {
     resetValidation() {
       this.$refs.form.resetValidation()
     },
-    login() {
-      setTimeout(() => (this.dialog = false), 4000)
-      router.push('dashboard')
-
-    }
+    
   },
 }
 </script>

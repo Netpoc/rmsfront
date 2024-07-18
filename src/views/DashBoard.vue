@@ -2,20 +2,15 @@
 <template>
     <v-container fluid>
         <v-row>
-            <v-col md="7">
+            <v-col class=".d-none" md="7">
                 <a-carousel class="fill-height" autoplay>
                     <v-sheet>
                         <MainMap />
                     </v-sheet>
                     <v-sheet color="#92D050" class="pa-5 rounded-xl fill-height">
-                        <h3>2</h3>
+                        <h3>Radom Location Infomation Display</h3>
                     </v-sheet>
-                    <div>
-                        <h3>3</h3>
-                    </div>
-                    <div>
-                        <h3>4</h3>
-                    </div>
+                    
                 </a-carousel>
             </v-col>
             <v-col md="5">

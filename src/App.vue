@@ -20,7 +20,7 @@
       ></v-btn>
     </v-card>
 
-    <v-sheet color="#0E0856" class="px-4 py-2 text-center w-100">
+    <v-sheet color="#0E0856" class="px-4 py-2 text-center w-100">      
       {{ new Date().getFullYear() }} © <p class="text-subtitle-2">Volatage & Wattage Ltd</p>
     </v-sheet>
   </v-footer>

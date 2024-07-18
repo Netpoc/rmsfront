@@ -8,31 +8,35 @@
                         Energy Source
                     </v-card-title>
                     <v-card-text class="d-flex justify-space-between">
-                        <v-sheet color="green" height="80" width="80" class="rounded-lg">
+                        <v-sheet color="green" height="80" width="80" class="rounded-lg d-flex align-center justify-center">
                             <div class="d-flex flex-column align-center">
-                                Grid
-                                <v-icon>
+                                GRID
+                                <v-icon class="mt-1" size="25">
                                     mdi-transmission-tower
                                 </v-icon>
                             </div>
                         </v-sheet>
-                        <v-sheet color="red" height="80" width="80" class="rounded-lg">
+                        <v-sheet color="red" height="80" width="80" class="rounded-lg d-flex align-center justify-center">
                             <div class="d-flex flex-column align-center">
-                                Gen 1
-                                <v-icon>
+                                GEN 1
+                                <v-icon class="mt-1" size="25">
                                     mdi-generator-stationary
                                 </v-icon>
                             </div>
                         </v-sheet>
-                        <v-sheet color="red" height="80" width="80" class="rounded-lg">
+                        <v-sheet color="red" height="80" width="80" class="rounded-lg d-flex align-center justify-center">
                             <div class="d-flex flex-column align-center">
-                                Gen 2
-                                <v-icon>
+                                GEN 2
+                                <v-icon class="mt-1" size="25">
                                     mdi-generator-stationary
                                 </v-icon>
                             </div>
                         </v-sheet>
+                        
                     </v-card-text>
+                    <div class="ml-3">
+                        Run Time:
+                    </div>
                 </v-card>
                 </v-sheet>
             </v-col>

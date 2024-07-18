@@ -72,22 +72,8 @@
             name: 'Mafoluku Data Center',
             calories: 'Solar',
             duration: '2h:5min',
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            duration: '0h:45min',
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            duration: '2h:5min'
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            duration: '9h:45min'
-          },
+          }
+          
         ],
       }
     },
