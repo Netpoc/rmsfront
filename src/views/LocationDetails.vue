@@ -185,7 +185,7 @@ export default {
     },
     methods: {
         fetchData() {
-            axios.get('http://localhost:7080/api/data')
+            axios.get('https://rms-backend-6hdz.onrender.com/api/data')
                 .then(response => {
                     const data = response.data.result.map(item => {
                         return {
