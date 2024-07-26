@@ -37,12 +37,8 @@
                                         mdi-generator-stationary
                                     </v-icon>
                                 </div>
-                            </v-sheet>
-
+                            </v-sheet>                           
                         </v-card-text>
-                        <div class="ml-3">
-                            Run Time:
-                        </div>
                     </v-card>
                 </v-sheet>
             </v-col>
@@ -50,27 +46,27 @@
                 <v-sheet color="#92D050" class="pa-5 rounded-xl fill-height">
                     <v-card color="#0E0856" class="pa-2 rounded-xl">
                         <v-card-text>
-                            <p>Weekly Energy Report</p>
-                            <v-table>
+                            <p>Daily Trends</p>
+                            <v-table v-for="dur in duration" :key="dur.id">
                                 <thead>
                                     <tr>
                                         <th class="text-left">
                                             Power Source
                                         </th>
                                         <th class="text-left">
-                                            Consumption
+                                            Duration
                                         </th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Grid</td>
-                                        <td>120Kwh</td>
+                                        <td>GRID:</td>
+                                        <td>{{ convertToHHMMSS(dur.grid) }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Diesel</td>
-                                        <td>23,000Litres</td>
+                                        <td>GEN:</td>
+                                        <td>{{ convertToHHMMSS(dur.gen) }}</td>
                                     </tr>
                                 </tbody>
                             </v-table>
@@ -102,7 +98,7 @@
         <v-row>
             <v-col>
                 <v-sheet color="#92D050" class="pa-5 rounded-xl fill-height">
-                    <v-card color="#0E0856" class="rounded-lg">
+                    <v-card class="rounded-lg">
                         <v-card-title>Diesel Consumption Trend</v-card-title>
                         <v-card-text>
                             <apexchart type="line" height="350" :options="chartOptions" :series="series">
@@ -117,12 +113,15 @@
 <script>
 import VueApexCharts from 'vue3-apexcharts';
 import axios from 'axios';
+import api from '@/services/api'
 export default {
     components: {
         apexchart: VueApexCharts,
     },
     data() {
         return {
+            volume: '',
+            duration: null,
             data: null,
             series: [{
                 name: 'LLS Value',
@@ -162,7 +161,7 @@ export default {
                 },
                 stroke: {
                     curve: 'smooth'
-                }                
+                }
             },
             din: [],
             din1: [],
@@ -175,6 +174,7 @@ export default {
         };
     },
     async mounted() {
+        this.fetchDuration();
         this.fetchData();
         this.setupRealtimeUpdates();
     },
@@ -184,6 +184,17 @@ export default {
         }
     },
     methods: {
+        async fetchDuration() {
+            try {
+                const response = await api.getFlespiData();
+                this.duration = response.data.result;
+                console.log('duration:', response.data.result[0])
+            } catch (error) {
+                this.error = 'Error fetching data';
+            } finally {
+                console.log('done')
+            }
+        },
         fetchData() {
             axios.get('https://rms-backend-6hdz.onrender.com/api/data')
                 .then(response => {
@@ -198,6 +209,7 @@ export default {
                         (a, b) => b["server.timestamp"] - a["server.timestamp"]
                     );
                     this.data = sortedData[0];
+                    console.log(this.data);
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -205,6 +217,22 @@ export default {
         },
         setupRealtimeUpdates() {
             setInterval(this.fetchData, 300000); // Fetch new data every 5 minutes
+        },
+        convertToHHMMSS(seconds) {
+            const hrs = Math.floor(seconds / 3600);
+            const mins = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${this.padToTwoDigits(hrs)}:${this.padToTwoDigits(mins)}:${this.padToTwoDigits(secs)}`;
+        },
+        padToTwoDigits(num) {
+            return num.toString().padStart(2, '0');
+        },
+        formatTimestamp(timestamp) {
+            const date = new Date(timestamp * 1000);
+            return date.toISOString();
+        },
+        formatDuration(duration) {
+            return `${this.convertToHHMMSS(duration)} (Total Seconds: ${duration})`;
         }
     },
     computed: {

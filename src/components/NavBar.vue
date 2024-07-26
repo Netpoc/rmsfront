@@ -7,7 +7,6 @@
         
         <v-toolbar-title>          
           Remote Monitoring System</v-toolbar-title>
-
         <v-spacer></v-spacer>
 
         <template v-if="$vuetify.display.mdAndUp">

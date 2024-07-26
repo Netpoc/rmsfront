@@ -5,16 +5,9 @@
         <a-carousel class="d-none d-md-block" autoplay>
           <div>
             Money!
-          </div>
-          <div>
-            <h3>Energy Management Ad</h3>
-          </div>
-          <div>
-            <h3>Earthing Protection Ad</h3>
-          </div>
-          <div>
-            <h3>Energy Audit Ad</h3>
-          </div>
+          </div>       
+          
+          
         </a-carousel>
       </v-col>
       <v-col md="4" cols="12">
