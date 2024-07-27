@@ -37,7 +37,7 @@
                                         mdi-generator-stationary
                                     </v-icon>
                                 </div>
-                            </v-sheet>                           
+                            </v-sheet>
                         </v-card-text>
                     </v-card>
                 </v-sheet>
@@ -82,9 +82,28 @@
                         </v-card-title>
                         <v-card-text>
                             Select Date Range
-                            <a-range-picker class="mt-1" v-model:value="value1" />
+                            <a-range-picker class="mt-1" @change="onDateChange" />
                             <div class="d-flex justify-end">
-                                <v-btn outline color="#92D050" class="mt-3" size="small">Generate</v-btn>
+                                <v-dialog v-model="report">
+                                    <template v-slot:activator="{ props: activatorProps }">
+                                        <v-btn v-bind="activatorProps" outline color="#92D050" class="mt-3"
+                                            size="small" >Generate</v-btn>
+                                    </template>
+                                    <v-card>
+                                        <v-card-title>Location Reports</v-card-title>
+                                        <v-card-text>
+                                            <div v-for="message in filteredMessages" :key="message.timestamp">
+                                                <p>Timestamp: {{ formatTimestamp(message.timestamp) }}</p>
+                                                <p>Din 1: {{ message['din.1'] }}</p>
+                                                <p>Din 2: {{ message['din.2'] }}</p>
+                                                <p>Din 3: {{ message['din.3'] }}</p>
+                                                <p>Fuel Level: {{ message['escort.lls.value.2'] }}</p>
+                                                <hr />
+                                            </div>
+                                        </v-card-text>
+                                    </v-card>
+                                </v-dialog>
+
                             </div>
                             <div class="mt-4 d-flex justify-space-between align-center">
                                 View Last Month's Report
@@ -120,6 +139,10 @@ export default {
     },
     data() {
         return {
+            filteredMessages: [],
+            report: false,
+            selectedRange: [],
+            message: [],
             volume: '',
             duration: null,
             data: null,
@@ -177,6 +200,8 @@ export default {
         this.fetchDuration();
         this.fetchData();
         this.setupRealtimeUpdates();
+        this.fetchMessages();
+        
     },
     beforeUnmount() {
         if (this.intervalId) {
@@ -184,6 +209,31 @@ export default {
         }
     },
     methods: {
+        onDateChange(dates) {
+      if (dates && dates.length === 2) {
+        this.selectedRange = dates.map(date => date.valueOf() / 1000); // Convert to Unix timestamp in seconds
+        this.filterMessages();
+      } else {
+        this.filteredMessages = [];
+      }
+    },
+        filterMessages() {
+            if (this.selectedRange.length === 2) {
+                const [start, end] = this.selectedRange;
+                this.filteredMessages = this.messages.filter(
+                    message => message.timestamp >= start && message.timestamp <= end
+                );
+            }
+        },
+        async fetchMessages() {
+            try {
+                const response = await api.getMessages();
+                this.messages = response.data.result
+            } catch (error) {
+                console.error("Error Fetching Device Message", error)
+            }
+        },
+
         async fetchDuration() {
             try {
                 const response = await api.getFlespiData();

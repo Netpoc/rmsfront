@@ -25,8 +25,7 @@
       <v-list-item
         v-for="(item, index) in items"
         :key="index"
-        :to="item.to"
-        
+        :to="item.to"        
       >
         <v-list-item-content>
           <v-list-item-title>{{ item.title }}</v-list-item-title>
@@ -54,11 +53,11 @@
         },
         {
           title: 'Reports',
-          to: '#',
+          to: '/reports',
         },
         {
           title: 'Profile',
-          to: '#',
+          to: '/profile',
         },
         
       ],

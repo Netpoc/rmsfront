@@ -11,9 +11,15 @@ const apiClient = axios.create({
 
 export default {
   getFlespiData() {
-    return apiClient.get('/gw/calcs/1704940/devices/5848395/intervals/20');
+    return apiClient.get('/gw/calcs/1704940/devices/5848395/intervals/21');
   },
   getRefillData() {
     return apiClient.get('https://flespi.io/gw/calcs/1704949/devices/5848395/intervals/all');
+  },
+  getAllDevices() {
+    return apiClient.get('https://flespi.io/gw/devices/all')
+  },
+  getMessages() {
+    return apiClient.get('https://flespi.io/gw/devices/5848395/messages?data={"fields":"escort.lls.value.2,din.1,din.2,din.3,timestamp"}')
   }
 };

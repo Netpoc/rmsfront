@@ -18,7 +18,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="item in desserts"
+          v-for="item in locations"
           :key="item.name"
         >
           <td>{{ item.name }}</td>
@@ -34,9 +34,12 @@
     </v-table>
   </template>
   <script>
+import api from '@/services/api';
+
   export default {
     data () {
       return {
+        locations: [],
         desserts: [
           {
             name: 'Mobolaji Bank Anthony',
@@ -77,5 +80,20 @@
         ],
       }
     },
+    async mounted () {
+      this.getLocations();
+    },
+    methods: {
+      async getLocations () {
+        try {
+          const response = await api.getAllDevices();
+          this.locations = response.data.result
+          console.log(this.locations);
+
+        } catch (error) {
+          console.error("Location list error", error)
+        }
+      }
+    }
   }
 </script>

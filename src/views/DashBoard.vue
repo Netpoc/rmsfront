@@ -118,13 +118,8 @@
                                         </v-card-text>
                                         <template v-slot:actions>
                                             <v-spacer></v-spacer>
-
-                                            <v-btn @click="dialog = false">
-                                                Disagree
-                                            </v-btn>
-
-                                            <v-btn @click="dialog = false">
-                                                Agree
+                                            <v-btn size="small" @click="dialog = false">
+                                                Ok
                                             </v-btn>
                                         </template>
                                     </v-card>
