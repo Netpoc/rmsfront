@@ -11,15 +11,22 @@ const apiClient = axios.create({
 
 export default {
   getFlespiData() {
-    return apiClient.get('/gw/calcs/1704940/devices/5848395/intervals/21');
+    return apiClient.get('/gw/calcs/1704940/devices/5848395/intervals/all');
   },
   getRefillData() {
-    return apiClient.get('https://flespi.io/gw/calcs/1704949/devices/5848395/intervals/all');
+    return apiClient.get('/gw/calcs/1704949/devices/5848395/intervals/all');
   },
   getAllDevices() {
-    return apiClient.get('https://flespi.io/gw/devices/all')
+    return apiClient.get('/gw/devices/all')
   },
   getMessages() {
-    return apiClient.get('https://flespi.io/gw/devices/5848395/messages?data={"fields":"escort.lls.value.2,din.1,din.2,din.3,timestamp"}')
+    return apiClient.get('/gw/devices/5848395/messages?data={"fields":"server.timestamp,escort.lls.value.2,din.1,din.2,din.3,timestamp,custom.param.306"}')
+  },
+  getLiveData() {
+    return apiClient.get('https://flespi.io/gw/devices/5848395/telemetry/din.1,din.2,din.3,escort.lls.value.2');
+  },
+  getGenOnDurations() {
+    return apiClient.get('/gw/calcs/1705560/devices/5848395/intervals/all')
   }
+  
 };

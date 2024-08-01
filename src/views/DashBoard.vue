@@ -163,7 +163,7 @@ export default {
             try {
                 const response = await api.getRefillData();
                 this.items = response.data.result;
-                this.unreadCount = this.items.length
+                this.unreadCount = this.items.length                
             } catch (error) {
                 console.error('Error Fetching Data on Refill', error)
             }

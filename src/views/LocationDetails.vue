@@ -47,7 +47,7 @@
                     <v-card color="#0E0856" class="pa-2 rounded-xl">
                         <v-card-text>
                             <p>Daily Trends</p>
-                            <v-table v-for="dur in duration" :key="dur.id">
+                            <v-table v-if="duration">
                                 <thead>
                                     <tr>
                                         <th class="text-left">
@@ -62,11 +62,11 @@
                                 <tbody>
                                     <tr>
                                         <td>GRID:</td>
-                                        <td>{{ convertToHHMMSS(dur.grid) }}</td>
+                                        <td>{{ convertToHHMMSS(duration.grid) }}</td>
                                     </tr>
                                     <tr>
                                         <td>GEN:</td>
-                                        <td>{{ convertToHHMMSS(dur.gen) }}</td>
+                                        <td>{{ convertToHHMMSS(duration.gen) }}</td>
                                     </tr>
                                 </tbody>
                             </v-table>
@@ -87,7 +87,7 @@
                                 <v-dialog v-model="report">
                                     <template v-slot:activator="{ props: activatorProps }">
                                         <v-btn v-bind="activatorProps" outline color="#92D050" class="mt-3"
-                                            size="small" >Generate</v-btn>
+                                            size="small">Generate</v-btn>
                                     </template>
                                     <v-card>
                                         <v-card-title>Location Reports</v-card-title>
@@ -100,6 +100,32 @@
                                                 <p>Fuel Level: {{ message['escort.lls.value.2'] }}</p>
                                                 <hr />
                                             </div>
+                                            <v-table height="300px" fixed-header>
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-left">
+                                                            Data
+                                                        </th>
+                                                        <th class="text-left">
+                                                            Diesel Consumption
+                                                        </th>
+                                                        <th class="text-left">
+                                                            Gen Runtime
+                                                        </th>
+                                                        <th class="text-left">
+                                                            Incidents
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="item in genOn" :key="item.id">
+                                                        <td>{{ shortTimestamp(item.begin) }} - {{ shortTimestamp(item.end) }}</td>
+                                                        <td>{{ item.calories }}</td>
+                                                        <td>{{ convertToHHMMSS(item.duration) }}</td>
+                                                        <td>{{ item.calories }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </v-table>
                                         </v-card-text>
                                     </v-card>
                                 </v-dialog>
@@ -139,6 +165,7 @@ export default {
     },
     data() {
         return {
+            genOn: null,
             filteredMessages: [],
             report: false,
             selectedRange: [],
@@ -201,7 +228,8 @@ export default {
         this.fetchData();
         this.setupRealtimeUpdates();
         this.fetchMessages();
-        
+        this.genRuntime();
+
     },
     beforeUnmount() {
         if (this.intervalId) {
@@ -209,14 +237,35 @@ export default {
         }
     },
     methods: {
+        shortTimestamp(timestamp) {
+            const date = new Date(timestamp * 1000); // Convert to milliseconds
+            const options = {
+                month: 'short',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+            };
+            return date.toLocaleString('en-US', options);
+        },
+        async genRuntime() {
+            try {
+                const response = await api.getGenOnDurations();
+                const data = response.data.result;
+                this.genOn = data;
+                console.log(this.genOn)
+            }catch(error) {
+                console.error(error)
+            }
+        },
         onDateChange(dates) {
-      if (dates && dates.length === 2) {
-        this.selectedRange = dates.map(date => date.valueOf() / 1000); // Convert to Unix timestamp in seconds
-        this.filterMessages();
-      } else {
-        this.filteredMessages = [];
-      }
-    },
+            if (dates && dates.length === 2) {
+                this.selectedRange = dates.map(date => date.valueOf() / 1000); // Convert to Unix timestamp in seconds
+                this.filterMessages();
+            } else {
+                this.filteredMessages = [];
+            }
+        },
         filterMessages() {
             if (this.selectedRange.length === 2) {
                 const [start, end] = this.selectedRange;
@@ -237,8 +286,9 @@ export default {
         async fetchDuration() {
             try {
                 const response = await api.getFlespiData();
-                this.duration = response.data.result;
-                console.log('duration:', response.data.result[0])
+                const interval = response.data.result;
+                this.duration = interval[interval.length - 1]
+                console.log('duration:', this.duration)
             } catch (error) {
                 this.error = 'Error fetching data';
             } finally {

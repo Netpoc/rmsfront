@@ -3,11 +3,44 @@
     <v-row>
       <v-col md="8">
         <a-carousel class="d-none d-md-block" autoplay>
-          <div>
-            Money!
-          </div>       
-          
-          
+          <v-card color="transparent" min-height="100vh">
+            <v-card-text>
+              <v-sheet class="centered-box flex-column">
+                <span class="text-h2 text-light-green-accent-4">Transform Your Energy Management</span>
+            <span class="ma-2 text-h5">Real-time Monitoring for Optimal Performance</span>
+              <span>Experience seamless control over your energy consumption with our 
+              advanced Remote Monitoring System (RMS). Track diesel levels, monitor 
+              generator efficiency, and ensure uninterrupted power supply—all from 
+              a single, intuitive dashboard.</span>
+              <v-btn class="ma-3">Get Started</v-btn>
+              </v-sheet>
+            </v-card-text>
+          </v-card>
+          <v-card color="transparent" min-height="100vh">
+            <v-card-text>
+              <v-sheet color="#92D050" class="centered-box flex-column">
+                <span class="text-h2 text-indigo-darken-4">Optimize Your Fuel Usage</span>
+            <span class="ma-2 text-h5">Cut Costs and Increase Efficiency</span>
+              <span>With our RMS, you can precisely monitor diesel consumption, detect 
+                anomalies, and prevent fuel theft. Our solution ensures that you get 
+                the most out of every drop of fuel, saving costs and enhancing operational efficiency.</span>
+              <v-btn class="ma-3">Learn More</v-btn>
+              </v-sheet>
+            </v-card-text>
+          </v-card>
+          <v-card color="transparent" min-height="100vh">
+            <v-card-text>
+              <v-sheet class="centered-box flex-column">
+                <span class="text-h2 text-light-green-accent-4">Total Control, Anywhere, Anytime</span>
+            <span class="ma-2 text-h5">Remote Access to Critical Data</span>
+              <span>Stay connected to your power infrastructure with real-time data 
+                accessible from any location. Our RMS app provides comprehensive 
+                insights and alerts, allowing you to make informed decisions and 
+                maintain peak performance at all times.</span>
+              <v-btn class="ma-3">Discover More</v-btn>
+              </v-sheet>
+            </v-card-text>
+          </v-card>         
         </a-carousel>
       </v-col>
       <v-col md="4" cols="12">
@@ -71,7 +104,7 @@
 </template>
 
 <script>
-import router from '@/router';
+//import router from '@/router';
 
 export default {
   data: () => ({
@@ -119,5 +152,18 @@ export default {
 
 :deep(.slick-slide h3) {
   color: #fff;
+}
+.centered-box {
+  display: flex;
+  justify-content: center; /* Centers the child div horizontally */
+  align-items: center;    /* Centers the child div vertically */
+  height: 80vh;          /* Full height of the viewport */
+  border: none
+}
+
+.left-aligned-text {
+  text-align: left;       /* Aligns text to the left */
+  border: none; /* Optional: To visualize the text box */
+  padding: 20px; 
 }
 </style>
