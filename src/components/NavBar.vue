@@ -4,8 +4,8 @@
         app
       >
         <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        
-        <v-toolbar-title>          
+        <v-img max-height="80" :src="require('../assets/volt_icon.png')"></v-img>
+        <v-toolbar-title>                  
           Remote Monitoring System</v-toolbar-title>
         <v-spacer></v-spacer>
 

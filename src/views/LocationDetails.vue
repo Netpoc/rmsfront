@@ -119,7 +119,8 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in genOn" :key="item.id">
-                                                        <td>{{ shortTimestamp(item.begin) }} - {{ shortTimestamp(item.end) }}</td>
+                                                        <td>{{ shortTimestamp(item.begin) }} - {{
+                                                            shortTimestamp(item.end) }}</td>
                                                         <td>{{ item.calories }}</td>
                                                         <td>{{ convertToHHMMSS(item.duration) }}</td>
                                                         <td>{{ item.calories }}</td>
@@ -168,6 +169,7 @@ export default {
             genOn: null,
             filteredMessages: [],
             report: false,
+            reportPayload: [],
             selectedRange: [],
             message: [],
             volume: '',
@@ -229,7 +231,7 @@ export default {
         this.setupRealtimeUpdates();
         this.fetchMessages();
         this.genRuntime();
-
+        this.genReport();
     },
     beforeUnmount() {
         if (this.intervalId) {
@@ -237,6 +239,15 @@ export default {
         }
     },
     methods: {
+        async genReport() {
+            try {
+                const response = await api.getReport();
+                this.reportPayload = response.data.result;
+                console.log(this.reportPayload)
+            } catch (error) {
+                console.error(error);
+            }
+        },
         shortTimestamp(timestamp) {
             const date = new Date(timestamp * 1000); // Convert to milliseconds
             const options = {
@@ -254,7 +265,7 @@ export default {
                 const data = response.data.result;
                 this.genOn = data;
                 console.log(this.genOn)
-            }catch(error) {
+            } catch (error) {
                 console.error(error)
             }
         },
@@ -282,7 +293,6 @@ export default {
                 console.error("Error Fetching Device Message", error)
             }
         },
-
         async fetchDuration() {
             try {
                 const response = await api.getFlespiData();

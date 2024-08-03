@@ -16,14 +16,14 @@
           </th>
         </tr>
       </thead>
-      <tbody>
-        <tr
-          v-for="item in locations"
-          :key="item.name"
-        >
-          <td>{{ item.name }}</td>
-          <td>{{ item.calories }}</td>
-          <td>{{ item.duration }}</td>
+      <tbody v-for="data in locations" :key="data">
+        <tr>
+          <td>{{ data['telemetry']['device.name'].value }}</td>
+          <td>
+            <span  v-if="data['telemetry']['din.1'].value == true">Grid <v-icon size="25" color="yellow" class="ml-2">mdi-lightbulb-on-10</v-icon></span>
+            <span v-if="data['telemetry']['din.2'].value == true">Generator <v-icon size="25" color="warning" class="ml-2">mdi-generator-stationary</v-icon></span>
+          </td>
+          <td></td>
           <td>
             <v-btn to="locationdetail" variant="text" >
             <v-icon>mdi-monitor-eye</v-icon>
@@ -32,6 +32,9 @@
         </tr>
       </tbody>
     </v-table>
+    <div>
+      
+    </div>
   </template>
   <script>
 import api from '@/services/api';
@@ -40,56 +43,23 @@ import api from '@/services/api';
     data () {
       return {
         locations: [],
-        desserts: [
-          {
-            name: 'Mobolaji Bank Anthony',
-            calories: 'Grid',
-            duration: '29h:45min'
-          },
-          {
-            name: 'Shangisha Branch',
-            calories: 'Grid',
-            duration: '29h:45min',
-          },
-          {
-            name: 'Allen Avenue',
-            calories: 'Gen',
-            duration: '29h:45min',
-          },
-          {
-            name: 'Saka Tinubu',
-            calories: 'Gen',
-            duration: '29h:45min',
-          },
-          {
-            name: 'Ketu-Ogudu II',
-            calories: "Grid",
-            duration: '29h:45min',
-          },
-          {
-            name: 'Dopemu/Akowonjo',
-            calories: 'Gen 2',
-            duration: '0h:5min',
-          },
-          {
-            name: 'Mafoluku Data Center',
-            calories: 'Solar',
-            duration: '2h:5min',
-          }
-          
-        ],
+        cleanData: []
       }
     },
     async mounted () {
       this.getLocations();
+      
     },
+    
     methods: {
       async getLocations () {
         try {
-          const response = await api.getAllDevices();
+          const response =await api.getLiveData();
+          
           this.locations = response.data.result
-          console.log(this.locations);
-
+          console.log(this.locations)
+                   
+         // console.log('Information:', this.locations.flat(1));
         } catch (error) {
           console.error("Location list error", error)
         }
