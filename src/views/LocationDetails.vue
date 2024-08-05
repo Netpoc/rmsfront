@@ -92,14 +92,29 @@
                                     <v-card>
                                         <v-card-title>Location Reports</v-card-title>
                                         <v-card-text>
-                                            <div v-for="message in filteredMessages" :key="message.timestamp">
-                                                <p>Timestamp: {{ formatTimestamp(message.timestamp) }}</p>
-                                                <p>Din 1: {{ message['din.1'] }}</p>
-                                                <p>Din 2: {{ message['din.2'] }}</p>
-                                                <p>Din 3: {{ message['din.3'] }}</p>
-                                                <p>Fuel Level: {{ message['escort.lls.value.2'] }}</p>
-                                                <hr />
-                                            </div>
+                                            <v-table>
+                                                <thead>
+                                                <tr><th>
+                                                    Date
+                                                </th></tr>
+                                                <tr><th>Grid Uptime</th></tr>
+                                                <tr><th>Gen Runtime</th></tr>
+                                                <tr><th>Diesel Start Volume</th></tr>
+                                                <tr><th>Diesel Close Volume</th></tr>
+                                                <tr><th>Diesel Consumption</th></tr>
+                                                </thead>
+                                            <tbody>
+                                                <tr v-for="message in filteredMessages" :key="message.timestamp">
+                                                    <td>{{ shortTimestamp(message.end) }}</td>
+                                                    <td>{{ convertToHHMMSS(message.gen_duration) }}</td>
+                                                    <td>{{ convertToHHMMSS(message.grid_duration) }}</td>
+                                                    <td>{{ message.start_volume }}</td>
+                                                    <td>{{ message.end_volume }}</td>
+                                                    <td>{{ message.diesel_volume_difference }}</td>
+                                                </tr>
+                                            </tbody>
+                                            </v-table>
+                                            
                                             <div class="table-responsive">
                                                 <v-table height="300px" fixed-header>
                                                 <thead>
@@ -174,7 +189,7 @@ export default {
             report: false,
             reportPayload: [],
             selectedRange: [],
-            message: [],
+            messages: [],
             volume: '',
             duration: null,
             data: null,
@@ -278,7 +293,7 @@ export default {
             if (this.selectedRange.length === 2) {
                 const [start, end] = this.selectedRange;
                 this.filteredMessages = this.messages.filter(
-                    message => message.timestamp >= start && message.timestamp <= end
+                    message => message.begin >= start && message.end <= end
                 );
             }
         },

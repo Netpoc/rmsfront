@@ -20,7 +20,7 @@ export default {
     return apiClient.get('/gw/devices/all')
   },
   getMessages() {
-    return apiClient.get('/gw/devices/5848395/messages?data={"fields":"server.timestamp,escort.lls.value.2,din.1,din.2,din.3,timestamp,custom.param.306"}')
+    return apiClient.get('/gw/calcs/1706248/devices/5848395/intervals/all')
   },
   getLiveData() {
     return apiClient.get('https://flespi.io/gw/devices/5848395/telemetry/device.name,din.1,din.2,din.3,escort.lls.value.2');
