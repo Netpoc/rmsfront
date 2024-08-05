@@ -26,7 +26,7 @@ export default {
     return apiClient.get('https://flespi.io/gw/devices/5848395/telemetry/device.name,din.1,din.2,din.3,escort.lls.value.2');
   },
   getGenOnDurations() {
-    return apiClient.get('/gw/calcs/1705560/devices/5848395/intervals/all')
+    return apiClient.get('/gw/calcs/1705766/devices/5848395/intervals/all')
   },
   getReport() {
     return apiClient.get('/gw/calcs/1705766/devices/5848395/intervals/all')

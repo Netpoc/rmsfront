@@ -13,26 +13,21 @@ const routes = [
   {
     path: '/dashboard',
     name: 'dashboard',
-    component: DashboardView
+    component: DashboardView,
+    meta: {requiresAuth: true }
   },
   {
     path: '/locationdetail',
     name: 'locationdetail',
-    component: LocationDetail
+    component: LocationDetail,
+    meta: {requiresAuth: true }
   },
   {
     path: '/reports',
     name: 'reportPage',
-    component: ReportView
+    component: ReportView,
+    meta: {requiresAuth: true }
   },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
 ]
 
 const router = createRouter({

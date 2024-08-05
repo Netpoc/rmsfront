@@ -100,20 +100,21 @@
                                                 <p>Fuel Level: {{ message['escort.lls.value.2'] }}</p>
                                                 <hr />
                                             </div>
-                                            <v-table height="300px" fixed-header>
+                                            <div class="table-responsive">
+                                                <v-table height="300px" fixed-header>
                                                 <thead>
                                                     <tr>
                                                         <th class="text-left">
-                                                            Data
+                                                            Date
                                                         </th>
                                                         <th class="text-left">
-                                                            Diesel Consumption
+                                                            Grid Uptime
                                                         </th>
                                                         <th class="text-left">
                                                             Gen Runtime
                                                         </th>
                                                         <th class="text-left">
-                                                            Incidents
+                                                            Diesel Refills
                                                         </th>
                                                     </tr>
                                                 </thead>
@@ -121,12 +122,14 @@
                                                     <tr v-for="item in genOn" :key="item.id">
                                                         <td>{{ shortTimestamp(item.begin) }} - {{
                                                             shortTimestamp(item.end) }}</td>
-                                                        <td>{{ item.calories }}</td>
-                                                        <td>{{ convertToHHMMSS(item.duration) }}</td>
-                                                        <td>{{ item.calories }}</td>
+                                                        <td>{{ convertToHHMMSS(item.din1_duration) }}</td>
+                                                        <td>{{ convertToHHMMSS(item.din2_duration) }}</td>
+                                                        <td v-for="fuel in item.fuel_refill" :key="fuel.id">{{ fuel['fuel.delta'] }} liters</td>
                                                     </tr>
                                                 </tbody>
                                             </v-table>
+                                            </div>
+                                            
                                         </v-card-text>
                                     </v-card>
                                 </v-dialog>
@@ -166,7 +169,7 @@ export default {
     },
     data() {
         return {
-            genOn: null,
+            genOn: [],
             filteredMessages: [],
             report: false,
             reportPayload: [],
@@ -215,14 +218,7 @@ export default {
                     curve: 'smooth'
                 }
             },
-            din: [],
-            din1: [],
-            din2: [],
-            din3: [],
-            position: {
-                latitude: [],
-                longitude: []
-            },
+            
         };
     },
     async mounted() {
@@ -243,7 +239,7 @@ export default {
             try {
                 const response = await api.getReport();
                 this.reportPayload = response.data.result;
-                console.log(this.reportPayload)
+                console.log('Gen Report:',this.reportPayload)
             } catch (error) {
                 console.error(error);
             }
@@ -259,12 +255,13 @@ export default {
             };
             return date.toLocaleString('en-US', options);
         },
+        //Generator Runtime Reports
         async genRuntime() {
             try {
                 const response = await api.getGenOnDurations();
                 const data = response.data.result;
                 this.genOn = data;
-                console.log(this.genOn)
+                console.log('Reports: ',this.genOn)
             } catch (error) {
                 console.error(error)
             }
@@ -298,7 +295,7 @@ export default {
                 const response = await api.getFlespiData();
                 const interval = response.data.result;
                 this.duration = interval[interval.length - 1]
-                console.log('duration:', this.duration)
+                
             } catch (error) {
                 this.error = 'Error fetching data';
             } finally {
@@ -319,7 +316,7 @@ export default {
                         (a, b) => b["server.timestamp"] - a["server.timestamp"]
                     );
                     this.data = sortedData[0];
-                    console.log(this.data);
+                    
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);

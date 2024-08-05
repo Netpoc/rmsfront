@@ -3,7 +3,7 @@
         color="#0E0856"
         app
       >
-        <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon  variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-img max-height="80" :src="require('../assets/volt_icon.png')"></v-img>
         <v-toolbar-title>                  
           Remote Monitoring System</v-toolbar-title>
@@ -34,7 +34,7 @@
     </v-list>
         <template v-slot:append>
           <div class="pa-2">
-            <v-btn block to="/">
+            <v-btn block @click="logout">
               Logout
             </v-btn>
           </div>
@@ -62,7 +62,12 @@
         
       ],
     }),
-
+    methods: {
+      logout() {
+        this.$emit('logout')
+        this.$router.push('/');
+      }
+    },
     watch: {
       group () {
         this.drawer = false

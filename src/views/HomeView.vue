@@ -56,10 +56,17 @@
                 <v-text-field v-model="username" :counter="10" :rules="nameRules" label="Username"
                   required></v-text-field>
 
-                <v-text-field v-model="password" :counter="10" :rules="nameRules" label="Password"
+                <v-text-field 
+                v-model="password" 
+                :counter="10" 
+                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[rules.required, rules.min]" 
+                :type="show1 ? 'text':'password'"
+                label="Password"
+                @click:append="show1 = !show1"
                   required></v-text-field>
 
-                <v-alert color="error" v-if="loginError">Invalid Username or Password!</v-alert>
+                <v-alert class="pa-2" color="error" v-if="loginError">Invalid Username or Password!</v-alert>
                 <div class="d-flex flex-column">
                   <v-btn class="mt-2" color="success" block @click="loginClick()">
                     Login
@@ -101,12 +108,18 @@
 
 export default {
   data: () => ({
+    show1: false,
+    show2: true,
     dialog: false,
     loginLoader: false,
     loginError: false,
     name: '',
     username: '',
-    password: '',
+    password: 'Password',
+    rules: {
+      required: value => !!value || 'Required.',
+      min: v => v.length >= 8 || 'Min 8 characters'
+    }, 
     nameRules: [
       v => !!v || 'Name is required',
       v => (v && v.length <= 10) || 'Name must be less than 10 characters',
@@ -135,8 +148,9 @@ export default {
     },
     loginClick() {
       if (this.username === 'admin' && this.password==='password') {
-        this.loginLoader = true;
+        this.loginLoader = true;        
         setTimeout(() => (this.$router.push('/dashboard')), 4000)
+        this.$emit('login');
       } else {
         this.loginError = true
       }
@@ -177,5 +191,9 @@ export default {
   border: none;
   /* Optional: To visualize the text box */
   padding: 20px;
+}
+
+.table-responsive {
+  overflow-x: auto;
 }
 </style>
