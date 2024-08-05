@@ -94,57 +94,60 @@
                                         <v-card-text>
                                             <v-table>
                                                 <thead>
-                                                <tr><th>
-                                                    Date
-                                                </th></tr>
-                                                <tr><th>Grid Uptime</th></tr>
-                                                <tr><th>Gen Runtime</th></tr>
-                                                <tr><th>Diesel Start Volume</th></tr>
-                                                <tr><th>Diesel Close Volume</th></tr>
-                                                <tr><th>Diesel Consumption</th></tr>
-                                                </thead>
-                                            <tbody>
-                                                <tr v-for="message in filteredMessages" :key="message.timestamp">
-                                                    <td>{{ shortTimestamp(message.end) }}</td>
-                                                    <td>{{ convertToHHMMSS(message.gen_duration) }}</td>
-                                                    <td>{{ convertToHHMMSS(message.grid_duration) }}</td>
-                                                    <td>{{ message.start_volume }}</td>
-                                                    <td>{{ message.end_volume }}</td>
-                                                    <td>{{ message.diesel_volume_difference }}</td>
-                                                </tr>
-                                            </tbody>
-                                            </v-table>
-                                            
-                                            <div class="table-responsive">
-                                                <v-table height="300px" fixed-header>
-                                                <thead>
                                                     <tr>
-                                                        <th class="text-left">
+                                                        <th>
                                                             Date
                                                         </th>
-                                                        <th class="text-left">
-                                                            Grid Uptime
-                                                        </th>
-                                                        <th class="text-left">
-                                                            Gen Runtime
-                                                        </th>
-                                                        <th class="text-left">
-                                                            Diesel Refills
-                                                        </th>
+                                                        <th>Grid Uptime</th>
+                                                        <th>Gen Runtime</th>
+                                                        <th>Diesel Start Volume</th>
+                                                        <th>Diesel Close Volume</th>
+                                                        <th>Diesel Consumption</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="item in genOn" :key="item.id">
-                                                        <td>{{ shortTimestamp(item.begin) }} - {{
-                                                            shortTimestamp(item.end) }}</td>
-                                                        <td>{{ convertToHHMMSS(item.din1_duration) }}</td>
-                                                        <td>{{ convertToHHMMSS(item.din2_duration) }}</td>
-                                                        <td v-for="fuel in item.fuel_refill" :key="fuel.id">{{ fuel['fuel.delta'] }} liters</td>
+                                                    <tr v-for="message in filteredMessages" :key="message.timestamp">
+                                                        <td>{{ shortTimestamp(message.begin) }}</td>
+                                                        <td>{{ convertToHHMMSS(message.gen_duration) }}</td>
+                                                        <td>{{ convertToHHMMSS(message.grid_duration) }}</td>
+                                                        <td>{{ message.start_volume }}</td>
+                                                        <td>{{ message.end_volume }}</td>
+                                                        <td>{{ message.diesel_volume_difference }}</td>
                                                     </tr>
                                                 </tbody>
                                             </v-table>
+
+                                            <div class="table-responsive">
+                                                <v-table height="300px" fixed-header>
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-left">
+                                                                Date
+                                                            </th>
+                                                            <th class="text-left">
+                                                                Grid Uptime
+                                                            </th>
+                                                            <th class="text-left">
+                                                                Gen Runtime
+                                                            </th>
+                                                            <th class="text-left">
+                                                                Diesel Refills
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="item in genOn" :key="item.id">
+                                                            <td>{{ shortTimestamp(item.begin) }} - {{
+                                                                shortTimestamp(item.end) }}</td>
+                                                            <td>{{ convertToHHMMSS(item.din1_duration) }}</td>
+                                                            <td>{{ convertToHHMMSS(item.din2_duration) }}</td>
+                                                            <td v-for="fuel in item.fuel_refill" :key="fuel.id">{{
+                                                                fuel['fuel.delta'] }} liters</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </v-table>
                                             </div>
-                                            
+
                                         </v-card-text>
                                     </v-card>
                                 </v-dialog>
@@ -233,7 +236,7 @@ export default {
                     curve: 'smooth'
                 }
             },
-            
+
         };
     },
     async mounted() {
@@ -254,7 +257,7 @@ export default {
             try {
                 const response = await api.getReport();
                 this.reportPayload = response.data.result;
-                console.log('Gen Report:',this.reportPayload)
+                console.log('Gen Report:', this.reportPayload)
             } catch (error) {
                 console.error(error);
             }
@@ -276,7 +279,7 @@ export default {
                 const response = await api.getGenOnDurations();
                 const data = response.data.result;
                 this.genOn = data;
-                console.log('Reports: ',this.genOn)
+                console.log('Reports: ', this.genOn)
             } catch (error) {
                 console.error(error)
             }
@@ -310,7 +313,7 @@ export default {
                 const response = await api.getFlespiData();
                 const interval = response.data.result;
                 this.duration = interval[interval.length - 1]
-                
+
             } catch (error) {
                 this.error = 'Error fetching data';
             } finally {
@@ -331,7 +334,7 @@ export default {
                         (a, b) => b["server.timestamp"] - a["server.timestamp"]
                     );
                     this.data = sortedData[0];
-                    
+
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
