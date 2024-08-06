@@ -90,23 +90,32 @@
                                             size="small">Generate</v-btn>
                                     </template>
                                     <v-card>
-                                        <v-card-title>Location Reports</v-card-title>
-                                        <v-card-text>
-                                            <v-table>
+                                        <v-card-title class="ma-3">
+                                            <div class="d-flex justify-space-between align-center" >
+                                                <span class="text-h3">Generated Report</span>
+                                                <v-btn-toggle rounded="xl">
+                                                    <v-btn icon="mdi-file-excel"></v-btn>
+                                                    <v-btn icon="mdi-file-pdf-box"></v-btn>                                                    
+                                                </v-btn-toggle>
+                                            </div>
+                                        </v-card-title>
+                                        <v-card-text class="ma-3">
+                                            <v-table class="custom-table">
                                                 <thead>
                                                     <tr>
-                                                        <th>
+                                                        <th class="custom-header">
                                                             Date
                                                         </th>
-                                                        <th>Grid Uptime</th>
-                                                        <th>Gen Runtime</th>
-                                                        <th>Diesel Start Volume</th>
-                                                        <th>Diesel Close Volume</th>
-                                                        <th>Diesel Consumption</th>
+                                                        <th class="custom-header">Grid Uptime</th>
+                                                        <th class="custom-header">Gen Runtime</th>
+                                                        <th class="custom-header">Diesel Start Volume</th>
+                                                        <th class="custom-header">Diesel Close Volume</th>
+                                                        <th class="custom-header">Diesel Consumption</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="message in filteredMessages" :key="message.timestamp">
+                                                    <tr v-for="message in filteredMessages" :key="message.timestamp"
+                                                        class="custom-row">
                                                         <td>{{ shortTimestamp(message.begin) }}</td>
                                                         <td>{{ convertToHHMMSS(message.gen_duration) }}</td>
                                                         <td>{{ convertToHHMMSS(message.grid_duration) }}</td>
@@ -116,39 +125,11 @@
                                                     </tr>
                                                 </tbody>
                                             </v-table>
-
-                                            <div class="table-responsive">
-                                                <v-table height="300px" fixed-header>
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="text-left">
-                                                                Date
-                                                            </th>
-                                                            <th class="text-left">
-                                                                Grid Uptime
-                                                            </th>
-                                                            <th class="text-left">
-                                                                Gen Runtime
-                                                            </th>
-                                                            <th class="text-left">
-                                                                Diesel Refills
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr v-for="item in genOn" :key="item.id">
-                                                            <td>{{ shortTimestamp(item.begin) }} - {{
-                                                                shortTimestamp(item.end) }}</td>
-                                                            <td>{{ convertToHHMMSS(item.din1_duration) }}</td>
-                                                            <td>{{ convertToHHMMSS(item.din2_duration) }}</td>
-                                                            <td v-for="fuel in item.fuel_refill" :key="fuel.id">{{
-                                                                fuel['fuel.delta'] }} liters</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </v-table>
-                                            </div>
-
                                         </v-card-text>
+                                        <v-card-actions>
+                                            <v-spacer></v-spacer>
+                                            <v-btn color="#92D050" variant="outlined" class="ma-5" @click="this.report = false">Close <v-icon class="ml-2">mdi-close-circle-outline</v-icon> </v-btn>
+                                        </v-card-actions>
                                     </v-card>
                                 </v-dialog>
 
@@ -388,5 +369,25 @@ export default {
 .rounded-lg {
     border-radius: 0.5rem;
     /* Equivalent to the 'lg' size in Tailwind CSS */
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.custom-table .custom-header {
+    background-color: #92D050;
+    color: #0E0856;
+    font-weight: bold;
+    text-align: left;
+    border-bottom: 2px solid white;
+}
+
+.custom-table .custom-row td {
+    border-left: 2px solid #ddd;
+}
+
+.custom-table .custom-row td:first-child {
+    border-left: none;
 }
 </style>
