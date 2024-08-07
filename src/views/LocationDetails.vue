@@ -103,11 +103,9 @@
                                             <v-table class="custom-table">
                                                 <thead>
                                                     <tr>
-                                                        <th class="custom-header">
-                                                            Date
-                                                        </th>
-                                                        <th class="custom-header">Grid Uptime</th>
+                                                        <th class="custom-header">Date</th>
                                                         <th class="custom-header">Gen Runtime</th>
+                                                        <th class="custom-header">Grid Uptime</th>
                                                         <th class="custom-header">Diesel Start Volume</th>
                                                         <th class="custom-header">Diesel Close Volume</th>
                                                         <th class="custom-header">Diesel Consumption</th>

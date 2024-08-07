@@ -9,7 +9,7 @@
             Power Source
           </th>
           <th class="text-left">
-            Duration
+            Alert
           </th>
           <th class="text-left">
             Action
@@ -23,7 +23,7 @@
             <span  v-if="data['telemetry']['din.1'].value == true">Grid <v-icon size="25" color="yellow" class="ml-2">mdi-lightbulb-on-10</v-icon></span>
             <span v-if="data['telemetry']['din.2'].value == true">Generator <v-icon size="25" color="warning" class="ml-2">mdi-generator-stationary</v-icon></span>
           </td>
-          <td></td>
+          <td><v-btn size="small" variant="text"><v-icon>mdi-storage-tank-outline</v-icon></v-btn></td>
           <td>
             <v-btn to="locationdetail" variant="text" >
             <v-icon>mdi-monitor-eye</v-icon>
