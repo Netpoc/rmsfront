@@ -176,9 +176,14 @@ export default {
             duration: null,
             data: null,
             series: [{
-                name: 'LLS Value',
+                name: 'Storage Tank',
                 data: []
-            }],
+            },
+            {
+                name: "Gen Base Tank",
+                data: []
+            }
+        ],
             chartOptions: {
                 chart: {
                     id: 'vuechart-example',
@@ -188,7 +193,10 @@ export default {
                         dynamicAnimation: {
                             speed: 1000
                         }
-                    }
+                    },
+                    toolbar: {
+                        speed: 1000
+                    },
                 },
                 xaxis: {
                     type: 'datetime',
@@ -202,7 +210,7 @@ export default {
                 },
                 yaxis: {
                     min: 0,
-                    max: 1000,
+                    max: 5500,
                     tickAmount: 10,
                     labels: {
                         formatter: (value) => `${value} liters`,
@@ -302,13 +310,18 @@ export default {
         fetchData() {
             axios.get('https://rms-backend-6hdz.onrender.com/api/data')
                 .then(response => {
-                    const data = response.data.result.map(item => {
-                        return {
-                            x: new Date(item['server.timestamp'] * 1000), // Convert timestamp to milliseconds
-                            y: item['escort.lls.value.2']
-                        };
-                    });
+                    const data = response.data.result.map(item => ({                        
+                        x: new Date(item['server.timestamp'] * 1000), // Convert timestamp to milliseconds
+                        y: item['custom.param.306'] / 100                       
+                    }));
+                    const data1 = response.data.result.map(item => ({
+                        x: new Date(item['server.timestamp'] * 1000),
+                        y: item['escort.lls.value.2']
+                    }));
+
                     this.series[0].data = data;
+                    this.series[1].data = data1;
+
                     const sortedData = response.data.result.sort(
                         (a, b) => b["server.timestamp"] - a["server.timestamp"]
                     );

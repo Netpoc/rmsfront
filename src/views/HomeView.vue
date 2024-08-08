@@ -154,7 +154,6 @@ export default {
       } else {
         this.loginError = true
       }
-
     }
 
   },
